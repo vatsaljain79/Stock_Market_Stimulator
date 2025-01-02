@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Webpage Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div id="company-info">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" id="logo">
+            <span id="company-name" style="color: azure;"><a href="/main" style="text-decoration: none; color:white">Golden Harbor</a></span>
+        </div>
+        <div id="search-box" class="search-container">
+            <button id="search-btn"><img src="{{ url_for('static', filename='glass.png') }}" alt="Search" style="width: 40px;"></button>
+            <input type="text" id="search-input" placeholder="What do you want to analyze">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+        <div id="user-info">
+            <div class="header-content">
+                <div class="dropdown">
+                    <h2 class="dropbtn">{{user}}'s Watchlist</h2>
+                    <div class="dropdown-content" id="drop1">
+                    </div>
+                </div>
+            </div>
+            <span id="user-icon" style="margin-right: 60px;">
+                <a href="/logout">
+                    <img src="{{ url_for('static', filename='icon.png') }}" alt="Company Logo" id="logo" title="Logout" style="display: block;">
+                    <p style="text-align: center; color: azure; font-size: 10px; margin-top: -5px; margin-left: -10px;">Logout</p>
+                </a>
+            </span>
+        </div>
+    </header>
+    <div id="background-image">
+        <div id="slideshow">
+            <img src="{{ url_for('static', filename='back3.jpg') }}" alt="Image 1">
+            <img src="{{ url_for('static', filename='back1.jpg') }}" alt="Image 2">
+            <img src="{{ url_for('static', filename='back2.jpg') }}" alt="Image 3">
+        </div>
+        <div id="overlay">
+            <div id="overlay-text">
+                <p style="font-family: Roboto Slab Light; font-size: 50px; font-style: italic;">"Where Strategy meets Success"</p>
+            </div>
+        </div>
+        <div id="overlay-text-1">
+            <div class="line" id="line1"></div>
+            <div class="line" id="line2"></div>
+            <div class="line" id="line3"></div>
+        </div>
+    </div>
+    <div>
+        <div style="display: flex;justify-content: space-between; margin-top: 70px; margin-left: 100px; margin-right: 150px;">
+            <h3>Stocks</h3>
+            <h3><a href="/allindexes" style="text-decoration: none; color: rgb(5, 173, 117);">All indices</a></h3> 
+        </div>
+        <div class="container">
+            <div class="box">
+                <a href="/allindexes/ASIANPAINT" style="text-decoration: none; color: black;"><h4 style="margin-left: 20px;">Asian Paints Ltd.</h4></a>
+                <h4 style="margin-left: 20px;"><span>{{data['NIFTY 50']['lastPrice']}}</span>  <span style="color: rgb(5, 173, 117);">{{int(data['NIFTY 50']['change'],2)}}  ({{int(data['NIFTY 50']['pChange'],2)}})</span>  </h4>
+            </div>
+            <div class="box">
+                <a href="/allindexes/HDFCBANK" style="text-decoration: none; color: black;"><h4 style="margin-left: 20px;">HDFC Bank Ltd</h4></a>
+                <h4 style="margin-left: 20px;"><span>{{data['HDFCBANK']['lastPrice']}}</span> <span style="color: rgb(5, 173, 117);">{{int(data['HDFCBANK']['change'],2)}} ({{int(data['HDFCBANK']['pChange'],2)}})</span>  </h4>
+            </div>
+            <div class="box">
+                <a href="/allindexes/TCS" style="text-decoration: none; color: black;"><h4 style="margin-left: 20px;">TCS</h4></a>
+                <h4 style="margin-left: 20px;"><span>{{data['TCS']['lastPrice']}}</span> <span style="color: rgb(5, 173, 117);">{{int(data['TCS']['change'],2)}} ({{int(data['TCS']['pChange'],2)}})</span>  </h4>
+            </div>
+            <div class="box">
+                <a href="/allindexes/SBIN" style="text-decoration: none; color: black;"><h4 style="margin-left: 20px;">SBIN</h4></a>
+                <h4 style="margin-left: 20px;"><span>{{data['SBIN']['lastPrice']}}</span> <span style="color: rgb(5, 173, 117);">{{int(data['SBIN']['change'],2)}} ({{int(data['SBIN']['pChange'],2)}})</span>  </h4>
+            </div>
+        </div>
+    </div>
+    <div class="stocks-table" style="margin-bottom: 100px;">
+        <h3 style="margin-top: 90px;">Your Inventory</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 135px;">Company Name</th>
+                    <th style="width: 115px;">Live Price</th>
+                    <th style="width: 115px;">Quantity </th>
+                    <th style="width: 115px;">Watchlist</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for q in curr_stocks%}
+                <tr>
+                    <td><a href="/allindexes/{{q}}" style="text-decoration: none; color: rgb(5, 173, 117);">{{ all_stocks.index[all_stocks['Symbol'] == q][0] }}</a></td>
+                    <td>{{f(q)['lastPrice']}}</td>
+                    <td>{{curr_stocks[q]}}</td>
+                    {%if all_stocks.index[all_stocks['Symbol'] == q][0] in curr%}
+                    <td><button class="round-button" id="{{ all_stocks.index[all_stocks['Symbol'] == q][0] }}" onclick="toggleWatchlist(this)" style="background-color: rgb(5, 173, 117);">✔</button></td>
+                    {%else%}
+                    <td><button class="round-button" id="{{ all_stocks.index[all_stocks['Symbol'] == q][0] }}"onclick="toggleWatchlist(this)">+</button></td>
+                    {%endif%}
+                    
+                {%endfor%}
+                {% if curr_stocks=={}%}
+                <tr>
+                    <td>
+                    No Stocks in Inventory Yet!
+                    </td>
+                </tr> 
+                {%endif%}   
+            </tbody>
+        </table>
+    </div>
+    <div class="stocks-table">
+        <h3 style="margin-top: 90px;">Stocks Recently Bought</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 135px;">Company Name</th>
+                    <th style="width: 115px;">Buying Price</th>
+                    <th style="width: 115px;">Quantity Bought</th>
+                    <th style="width: 115px;">Date and Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in stocks_bought%}
+                <tr>
+                    <td><a href="/allindexes/{{q[0]}}" style="text-decoration: none; color: rgb(5, 173, 117);">{{ all_stocks.index[all_stocks['Symbol'] == q[0]][0] }}</a></td>
+                    <td>${{q[1]}}</td>
+                    <td>{{q[2]}}</td>
+                    <td>{{q[3]}}</td>
+                </tr>
+                {%endfor%}
+                {% if stocks_bought==[]%}
+                <tr>
+                    <td>
+                    No Stocks bought Yet!
+                    </td>
+                </tr> 
+                {%endif%}   
+            </tbody>
+        </table>
+    </div>
+    <div class="stocks-table" style="margin-bottom: 100px;">
+        <h3 style="margin-top: 90px;">Stocks Recently Sold</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 135px;">Company Name</th>
+                    <th style="width: 115px;">Selling Price</th>
+                    <th style="width: 115px;">Quantity Sold</th>
+                    <th style="width: 115px;">Date and Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in stocks_sold%}
+                <tr>
+                    <td><a href="/allindexes/{{q[0]}}" style="text-decoration: none; color: rgb(5, 173, 117);">{{ all_stocks.index[all_stocks['Symbol'] == q[0]][0] }}</a></td>
+                    <td>${{q[1]}}</td>
+                    <td>{{q[2]}}</td>
+                    <td>{{q[3]}}</td>
+                </tr>
+                {%endfor%}
+                {% if stocks_sold==[]%}
+                <tr>
+                    <td>
+                    No Stocks sold Yet!
+                    </td>
+                </tr> 
+                {%endif%} 
+            </tbody>
+        </table>
+    </div>
+    <div id="money-section">
+        <h2>Your Balance</h2>
+        <p id="current-balance">Current Balance: Rs. {{bal}}</p>
+    
+        <div class="money-actions">
+            <div class="action-box">
+                <label for="add-money">Add Money:</label>
+                <input type="number" id="add-money" class="money-input" name="add-money" placeholder="Enter amount">
+                <button class="money-button" id="add-money-btn" onclick="addMoney()">Add</button>
+            </div>
+    
+            <div class="action-box">
+                <label for="extract-money">Extract Money:</label>
+                <input type="number" id="extract-money" class="money-input" name="extract-money" placeholder="Enter amount">
+                <button class="money-button" id="extract-money-btn" onclick="extractMoney()">Extract</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+    <script>
+        $('#drop1').load('/watchlist')
+        function toggleWatchlist(button) {
+            if (button.innerHTML === '+') {
+                var watch=$('#watch');
+                // console.log('hello: ',f)
+                // if (f==true){
+                //     watch.children().first().remove();
+                //     f=false;
+                // }
+                watch.find('a:contains("' + "Empty !" + '")').remove();
+                $.ajax({url:'/link_stock_graph',type:'POST',data:{'st':button.id},success:function(data){
+                    var link="/allindexes/"+data;
+                    watch.append('<a href='+link+ '>' +button.id+'</a>');
+                    console.log('hello','<a href='+link+ '>' +button.id +'</a>');
+                    var new_state=$('#watch').html();
+                    $.ajax({url: '/update_watch',type:'POST',data: {new_state:new_state,st:button.id}});
+                    button.innerHTML = '✔';
+                    button.style.backgroundColor='rgb(5,173,117)';
+                }});
+                
+                
+
+            } else {
+                var watch=$('#watch');
+                watch.find('a:contains("' + button.id + '")').remove();
+                
+                console.log("w",watch.length);
+                if(watch.children().length==0){
+                    watch.append('<a href="#">Empty !</a>');
+                }
+                var new_state=$('#watch').html();
+                console.log("hi",new_state);
+                $.ajax({url: '/update_watch',type:'POST',data: {new_state:new_state,st1:button.id}});
+                button.innerHTML = '+';
+                button.style.backgroundColor='black';
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slideshow = document.getElementById('slideshow');
+            const overlay = document.getElementById('overlay-text-1');
+            const overlay1 = document.getElementById('overlay');
+
+            
+            const lines = Array.from(overlay.getElementsByClassName('line'));
+
+            let currentIndex = 0;
+            let isHovered = false;
+
+            function changeSlide() {
+                if (!isHovered) {
+                    currentIndex = (currentIndex + 1) % 3;
+                    updateLines();
+                    slideshow.style.transition = 'left 1s linear';
+                    slideshow.style.left = `-${currentIndex * 100}%`;
+                }
+            }
+
+            function updateLines() {
+                lines.forEach((line, index) => {
+                    
+                    line.style.backgroundColor = '#fff';
+                    line.style.opacity = index === currentIndex ? '1' : '0.5';
+                });
+            }
+
+            setInterval(changeSlide, 4000);
+
+          
+            overlay1.addEventListener('mouseenter', function () {
+                isHovered = true;
+            });
+
+            overlay1.addEventListener('mouseleave', function () {
+                isHovered = false;
+            });
+
+            slideshow.style.left = `-${currentIndex * 100}%`;
+            updateLines();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+
+            searchInput.addEventListener('input', function () {
+                const inputText = searchInput.value.toLowerCase();
+                const suggestions = {{all|safe}}.filter(item => item.toLowerCase().includes(inputText));
+
+                searchSuggestions.innerHTML = '';
+                suggestions.forEach(suggestion => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.textContent = suggestion;
+                    suggestionDiv.classList.add('search-suggestion');
+                    suggestionDiv.addEventListener('click', function () {
+                        searchInput.value = suggestion;
+                        searchSuggestions.innerHTML = '';
+                    });
+                    searchSuggestions.appendChild(suggestionDiv);
+                });
+
+                searchSuggestions.style.display = suggestions.length ? 'block' : 'none';
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('#searchSuggestions') && !event.target.closest('#search-input')) {
+                    searchSuggestions.style.display = 'none';
+                }
+            });
+
+            const searchBtn = document.getElementById('search-btn');
+            searchBtn.addEventListener('click', function () {
+                var st=searchInput.value;
+                searchInput.value = '';
+
+                searchSuggestions.style.display = 'none';
+
+                const searchText = searchInput.value;
+                console.log(`Search button clicked with text: ${searchText}`);
+                $.ajax({url:'/link_stock_graph',type:'POST',data:{'st':st},success:function(data){window.location.href="/allindexes/"+data;}});
+            });
+        });
+    </script>
+    <script>
+        let currentBalance = {{bal}}; 
+
+        function addMoney() {
+            const addAmount = parseFloat(document.getElementById('add-money').value);
+            if (!isNaN(addAmount)) {
+                currentBalance += addAmount;
+                $.ajax({url:'/update_balance',type:'POST', data:{balance:currentBalance}});
+                updateBalance();
+                clearInput('add-money');
+            }
+        }
+
+        function extractMoney() {
+            const extractAmount = parseFloat(document.getElementById('extract-money').value);
+            if (!isNaN(extractAmount)) {
+                currentBalance -= extractAmount;
+                $.ajax({url:'/update_balance',type:'POST', data:{balance:currentBalance}});
+                updateBalance();
+                clearInput('extract-money');
+            }
+        }
+
+        function updateBalance() {
+            document.getElementById('current-balance').textContent = `Current Balance: $${currentBalance.toFixed(2)}`;
+        }
+
+        function clearInput(inputId) {
+            document.getElementById(inputId).value = '';
+        }
+    </script>
+</body>
+</html>

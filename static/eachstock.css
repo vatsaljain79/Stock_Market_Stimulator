@@ -1,0 +1,575 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab Light';
+}
+
+.left-side {
+    width: 70%;
+    overflow-y: auto;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.right-side {
+    width: 30%;
+    background-color: #fff;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.box {
+    width: 250px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 100px;
+}
+header {
+    background-color: #000000;
+    border-bottom: 1px solid transparent;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; 
+    width: 100%; 
+    z-index: 1000; 
+    top: 0;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent,rgb(255, 255, 255), transparent);
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #000000;
+    color: #fff; 
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px; 
+    cursor: pointer;
+    font-size: 16px;
+    width: 170px; 
+}
+
+.dropbtn::after {
+    content: '\25BD'; 
+    margin-left: 5px; 
+    font-size: 12px; 
+    color: #555; 
+}
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0; 
+    transition: opacity 0.6s; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 175px;
+    visibility: hidden;
+    transform: translateY(-50%);
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1; 
+    visibility: visible;
+    transform: translateY(0);
+}
+.dropdown-content a {
+    display: block;
+    color: #333; 
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f9f9f9; 
+}
+
+#search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-container {
+    position: relative;
+}
+
+#search-input {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 300px; 
+}
+
+#search-btn {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px; 
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: none;
+}
+
+#search-input:focus + #search-btn + .search-suggestions {
+    display: block;
+}
+
+.search-suggestion {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.search-suggestion:hover {
+    background-color: #b2b0b0;
+}
+
+#logo {
+    width: 50px; 
+    height: auto;
+    margin-right: 10px;
+}
+
+#company-info {
+    display: flex;
+    align-items: center;
+}
+
+#company-name {
+    font-size: 1.5em;
+}
+
+#user-info {
+    display: flex;
+    align-items: center;
+}
+
+
+#username {
+    position: relative;
+}
+
+#username::after {
+    content: '\25BC'; 
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+#user-icon {
+    font-size: 1.5em;
+}
+
+#breadcrumb {
+    margin-top: 50px; 
+    margin-left: 100px; 
+    font-size: 14px;
+    color: #555;
+}
+
+#breadcrumb a {
+    color: #555;
+    text-decoration: none;
+}
+
+#breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-left: 100px; 
+}
+
+.headertemp {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.watchlist-button {
+    background-color: white;
+    color: #000000;
+    border: 2px solid #333;
+    border-radius: 20px;
+    padding: 6px 10px;
+    margin-left: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.watchlist-button:hover {
+    background-color: #141313; 
+    color: #ddd;
+}
+
+.watchlist-logo {
+    width: 20px; 
+    height: auto;
+    margin-right: 5px;
+}
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 280px;
+    margin-bottom: 20px;
+}
+
+.toggle-button {
+    background-color: #ffffff;
+    border: 1.5px solid #333;
+    height: 35px;
+    width: 50px;
+    cursor: pointer;
+    border-radius: 20px;
+    align-items: center;
+    display: flex;
+    align-items: center; 
+    margin-right: 120px;
+}
+
+.toggle-button img {
+    width: 25px; 
+    height: auto;
+    margin-left: 4px;
+}
+
+.time-buttons button {
+    background-color: #ffffff;
+    color: #333;
+    border: 1.5px solid #333;
+    padding: 10px;
+    width: 70px;
+    height: 35px;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-right: 15px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.time-buttons button.active {
+    background-color: #2a2727;
+    color: #ffffff;
+}
+
+.time-buttons button:hover {
+    background-color: #555151;
+    color: #ffffff;
+}
+.performance-section {
+    margin-top: 40px; 
+    margin-left: 110px;
+}
+
+.performance-section h2 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.performance-details {
+    list-style: none;
+    padding: 0;
+}
+
+.performance-details li {
+    margin-bottom: 10px;
+    font-size: 20px;
+    margin-left: 15px;
+}
+.performance-details .special {
+    display: inline-block;
+    margin-right: 20px; 
+}
+.performance-details .spec {
+    display: inline-block;
+    margin-right: 20px; 
+}
+
+.performance-details li strong {
+    margin-right: 5px;
+    font-weight: bold;
+    color: #2a2727; 
+}
+.buy-section {
+    margin-top: 30px;
+    margin-left: 110px;
+    margin-right: 110px;
+}
+
+.buy-input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.buy-input-container label {
+    margin-bottom: 5px;
+}
+
+.buy-input-container input {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.buy-section button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 60px;
+}
+
+.buy-section button:hover {
+    background-color: #535353;
+    color: #ffffff;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.sell-section {
+    margin-top: 30px;
+    margin-left: 110px;
+    margin-right: 110px;
+    margin-bottom: 50px;
+}
+
+.sell-input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.sell-input-container label {
+    margin-bottom: 5px;
+}
+
+.sell-input-container input {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.sell-section button {
+    background-color: #a10606; 
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 60px;
+}
+
+
+.sell-section button:hover {
+    background-color: #440101; 
+}
+
+
+.sell-section .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sell-section .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#compare-table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.compare-section {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.compare-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.compare-input {
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.criteria-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.criteria-item {
+    margin-bottom: 10px;
+}
+
+.criteria-checkbox {
+    margin-right: 5px;
+}
+
+.add-stock-button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+}
+
+.add-stock-button:hover {
+    background-color: #535353;
+    color: #ffffff;
+}
+
+.stock-suggestions {
+    display: none;
+    position: absolute;
+    width: calc(100% - 22px); 
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.stock-suggestion {
+    padding: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s, color 0.3s;; 
+}
+
+.stock-suggestion:hover {
+    background-color: #828282;
+}
+
+.criteria-label {
+    margin-left: 5px;
+}
+
+.criteria-button {
+    margin-top: 15px;
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.criteria-button:hover {
+    background-color: #3e3e3e;
+    color: #ffffff;
+}
+
+.criteria-button.selected {
+    background-color: #333;
+    color: #fff;
+}
+.refresh {
+    background-color: rgb(0, 0, 0);
+    font-size: 13px;
+    color: #ffffff;
+    border: 2px solid #333;
+    width:180px;
+    height: 40px;;
+    border-radius: 25px;
+    padding: 6px 10px;
+    margin-left: 100px;
+    margin-top: 30px;
+    cursor: pointer;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.refresh:hover {
+    background-color: #4c4c4c; 
+    color: #ffffff;
+}
